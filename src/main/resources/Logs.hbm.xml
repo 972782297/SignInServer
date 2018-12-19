@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.njust.entity.Logs" table="logs" schema="signin">
+        <composite-id mapped="true" class="com.njust.entity.LogsPK">
+            <key-property name="clazz">
+                <column name="class" sql-type="varchar(4)" length="4"/>
+            </key-property>
+            <key-property name="time">
+                <column name="time" sql-type="varchar(3)" length="3"/>
+            </key-property>
+        </composite-id>
+        <property name="list">
+            <column name="list" sql-type="varchar(15000)" length="15000"/>
+        </property>
+    </class>
+</hibernate-mapping>

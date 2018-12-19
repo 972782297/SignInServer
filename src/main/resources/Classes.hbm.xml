@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.njust.entity.Classes" table="classes" schema="signin">
+        <id name="code">
+            <column name="code" sql-type="varchar(4)" length="4"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="teacher">
+            <column name="teacher" sql-type="varchar(15)" length="15"/>
+        </property>
+        <property name="student">
+            <column name="student" sql-type="varchar(15)" length="15"/>
+        </property>
+        <property name="longitude">
+            <column name="longitude" sql-type="double" precision="-1"/>
+        </property>
+        <property name="latitude">
+            <column name="latitude" sql-type="double" precision="-1"/>
+        </property>
+        <property name="start">
+            <column name="start" sql-type="int(11)" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>

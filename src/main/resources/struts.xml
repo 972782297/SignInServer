@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <!-- 将Action交给spring容器管理 -->
+    <constant name="struts.objectFactory" value="spring" />
+
+    <!-- 零配置 -->
+    <constant name="struts.convention.package.locators" value="action" />
+    <constant name="struts.convention.package.locators.basePackage" value="com.njust" />
+
+    <!-- 模式为开发模式，修改xml配置文件会自动加载，项目交付的时候设置为false,以免影响性能 -->
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.configuration.xml.reload" value="false" />
+    <!-- 字符集编码 -->
+    <constant name="struts.i18n.encoding" value="utf-8" />
+</struts>

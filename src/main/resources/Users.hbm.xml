@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.njust.entity.Users" table="users" schema="signin">
+        <id name="account">
+            <column name="account" sql-type="varchar(15)" length="15"/>
+        </id>
+        <property name="name">
+            <column name="name" sql-type="varchar(10)" length="10"/>
+        </property>
+        <property name="password">
+            <column name="password" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="role">
+            <column name="role" sql-type="varchar(5)" length="5"/>
+        </property>
+        <property name="mac">
+            <column name="mac" sql-type="varchar(50)" length="50"/>
+        </property>
+        <property name="phone">
+            <column name="phone" sql-type="varchar(15)" length="15"/>
+        </property>
+    </class>
+</hibernate-mapping>

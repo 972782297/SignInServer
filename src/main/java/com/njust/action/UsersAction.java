@@ -1,7 +1,9 @@
 package com.njust.action;
 
+import com.njust.entity.Users;
 import com.njust.service.user.UserService;
 import com.opensymphony.xwork2.ActionSupport;
+import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -17,14 +19,18 @@ import java.util.Map;
 @Scope("prototype")
 @ParentPackage("json-default")
 @Namespace("/")
-public class UsersAction extends ActionSupport{
+public class UsersAction extends ActionSupport implements ModelDriven<Users> {
     @Autowired
     private UserService userService;
 
     private Map<String, Object> map;
-    private String account;
 
-    private String password;
+    private Users u = new Users();
+
+    @Override
+    public Users getModel() {
+        return u;
+    }
 
 
     public Map<String, Object> getMap() {
@@ -43,7 +49,7 @@ public class UsersAction extends ActionSupport{
     )
     public String login() {
         map = new HashMap<String, Object>();
-        int tem = userService.login(getAccount(),getPassword());
+        int tem = userService.login(u.getAccount(),u.getPassword());
         if (tem == -1)
             map.put("code",-1);//用户名密码错误
         if (tem == 0)
@@ -53,20 +59,45 @@ public class UsersAction extends ActionSupport{
         return "json";
     }
 
-
-    public String getAccount() {
-        return account;
+    @Action(
+            value = "register",
+            results = {
+                    @Result(name = "json",type = "json",params = {"root","map"})
+            }
+    )
+    public String register(){
+        map=new HashMap<String,Object>();
+        boolean f=userService.register(u.getAccount(),u.getPassword(),u.getRole(),u.getName(),u.getPhone(),u.getMac());
+        if (f)
+            map.put("code",0);//成功
+        else
+            map.put("code",-1);//失败，例如用户名被占用
+        return "json";
     }
 
-    public void setAccount(String account) {
-        this.account = account;
+    @Action(
+            value = "changePassword",
+            results = {
+                    @Result(name = "json",type = "json",params = {"root","map"})
+            }
+    )
+    public String changePassword(){
+        map=new HashMap<String,Object>();
+        userService.changePassword(u.getAccount(),u.getPassword());
+        map.put("code",0);
+        return "json";
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @Action(
+            value = "changePhone",
+            results = {
+                    @Result(name = "json",type = "json",params = {"root","map"})
+            }
+    )
+    public String changePhone(){
+        map=new HashMap<String,Object>();
+        userService.changePhone(u.getAccount(),u.getPhone());
+        map.put("code",0);
+        return "json";
     }
 }

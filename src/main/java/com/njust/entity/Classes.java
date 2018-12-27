@@ -46,7 +46,7 @@ public class Classes {
     }
 
     @Basic
-    @Column(name = "student", nullable = false, length = 15)
+    @Column(name = "student", nullable = false, length = 15000)
     public String getStudent() {
         return student;
     }

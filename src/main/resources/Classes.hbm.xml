@@ -15,7 +15,7 @@
             <column name="teacher" sql-type="varchar(15)" length="15"/>
         </property>
         <property name="student">
-            <column name="student" sql-type="varchar(15)" length="15"/>
+            <column name="student" sql-type="varchar(15000)" length="15000"/>
         </property>
         <property name="longitude">
             <column name="longitude" sql-type="double" precision="-1"/>

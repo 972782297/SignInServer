@@ -8,4 +8,6 @@ public interface UserService {
     void changePassword(String account,String newPassword);
 
     void changePhone(String account,String newPhone);
+
+    void logout();
 }

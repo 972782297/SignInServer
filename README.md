@@ -97,3 +97,50 @@
     示例
     {"code":0} 这表示修改成功
     ```
+- 用户注销
+  - 地址:http://106.15.187.231:8080/SignInServer/logout
+  - 请求方式:GET/POST
+  - 请求参数及说明:
+    无
+ 
+    ```
+    GET示例
+    http://106.15.187.231:8080/SignInServer/logout
+    ```
+  - 返回json:
+
+    |参数名|类型|说明|
+    | - | - | - |
+    |code|int|0:成功|
+    ```
+    示例
+    {"code":0} 这表示注销成功
+    ```
+- 获取当前用户信息
+  - 地址:http://106.15.187.231:8080/SignInServer/getCurrent
+  - 请求方式:GET/POST
+  - 请求参数及说明:
+    无
+    ```
+    GET示例
+    http://106.15.187.231:8080/SignInServer/getCurrent
+    ```
+  - 返回json:
+
+    |参数名|类型|说明|
+    | - | - | - |
+    |code|int|0:成功|
+    |data|Users|当前登录人|
+    ```
+    示例
+    {"code":0,
+    "data":{"account":"916106840777",
+            "mac":"test",
+            "name":"张三",
+            "password":"123456",
+            "phone":"10086",
+            "role":"student"
+            }
+    }
+    这表示获取成功
+    ```

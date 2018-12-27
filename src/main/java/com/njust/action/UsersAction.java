@@ -2,6 +2,7 @@ package com.njust.action;
 
 import com.njust.entity.Users;
 import com.njust.service.user.UserService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.struts2.convention.annotation.Action;
@@ -98,6 +99,33 @@ public class UsersAction extends ActionSupport implements ModelDriven<Users> {
         map=new HashMap<String,Object>();
         userService.changePhone(u.getAccount(),u.getPhone());
         map.put("code",0);
+        return "json";
+    }
+
+    @Action(
+            value = "logout",
+            results = {
+                    @Result(name = "json",type = "json",params = {"root","map"})
+            }
+    )
+    public String logout(){
+        map=new HashMap<String,Object>();
+        userService.logout();
+        map.put("code",0);
+        return "json";
+    }
+
+    @Action(
+            value = "getCurrent",
+            results = {
+                    @Result(name = "json",type = "json",params = {"root","map"})
+            }
+    )
+    public String getCurrent(){
+        Users uu = (Users) ActionContext.getContext().getSession().get("user");
+        map = new HashMap<String, Object>();
+        map.put("code",0);
+        map.put("data",uu);
         return "json";
     }
 }

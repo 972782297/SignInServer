@@ -45,7 +45,7 @@ public class Users {
     }
 
     @Basic
-    @Column(name = "role", nullable = false, length = 5)
+    @Column(name = "role", nullable = false, length = 20)
     public String getRole() {
         return role;
     }

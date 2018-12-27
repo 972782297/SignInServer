@@ -15,7 +15,7 @@
             <column name="password" sql-type="varchar(50)" length="50"/>
         </property>
         <property name="role">
-            <column name="role" sql-type="varchar(5)" length="5"/>
+            <column name="role" sql-type="varchar(20)" length="20"/>
         </property>
         <property name="mac">
             <column name="mac" sql-type="varchar(50)" length="50"/>

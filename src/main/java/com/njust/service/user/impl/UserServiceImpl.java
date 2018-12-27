@@ -3,6 +3,7 @@ package com.njust.service.user.impl;
 import com.njust.dao.BaseDAO;
 import com.njust.entity.Users;
 import com.njust.service.user.UserService;
+import com.opensymphony.xwork2.ActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ public class UserServiceImpl implements UserService {
         List users = baseDAO.find("from Users user where user.account='" + account + "' and user.password='" + password+"'");
         if (users.size() != 0) {
             Users tem = (Users) users.get(0);
+            ActionContext.getContext().getSession().put("user", tem);
             if (tem.getRole().equals("teacher"))
                 return 1;
             else
@@ -60,5 +62,10 @@ public class UserServiceImpl implements UserService {
         u.setAccount(account);
         u.setPhone(newPhone);
         baseDAO.update(u);
+    }
+
+    @Override
+    public void logout(){
+        ActionContext.getContext().getSession().clear();
     }
 }

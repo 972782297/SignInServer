@@ -1,5 +1,7 @@
 package com.njust.service.clazz;
 
+import java.util.List;
+
 public interface ClazzService {
     //返回code
     String createClazz(String name,double longitude,double latitude);
@@ -9,7 +11,7 @@ public interface ClazzService {
     void quitClazz(String code);
     void startSignIn(String code);
     void stopSignIn(String code);
-    void getClazz();
-    //0成功 -1未开始签到 -2mac地址不对 -3位置不对
+    List getClazz();
+    //0成功 -1未开始签到 -2mac地址不对 -3位置不对 -4没有此班级
     int signIn(String code,String mac,double newLongitude,double newLatitude);
 }

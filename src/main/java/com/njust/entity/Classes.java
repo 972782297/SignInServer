@@ -14,6 +14,7 @@ public class Classes {
     private double longitude;
     private double latitude;
     private Integer start;
+    private int next;
 
     @Basic
     @Column(name = "name", nullable = false, length = 50)
@@ -117,5 +118,15 @@ public class Classes {
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (start != null ? start.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "next", nullable = false)
+    public int getNext() {
+        return next;
+    }
+
+    public void setNext(int next) {
+        this.next = next;
     }
 }

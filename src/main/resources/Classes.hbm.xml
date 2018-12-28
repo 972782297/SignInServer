@@ -26,5 +26,8 @@
         <property name="start">
             <column name="start" sql-type="int(11)" not-null="true"/>
         </property>
+        <property name="next">
+            <column name="next" sql-type="int(11)"/>
+        </property>
     </class>
 </hibernate-mapping>

@@ -1,6 +1,7 @@
 package com.njust.service.clazz.impl;
 
 import com.njust.dao.BaseDAO;
+import com.njust.service.log.LogService;
 import com.njust.entity.Classes;
 import com.njust.entity.Logs;
 import com.njust.entity.Users;
@@ -18,6 +19,8 @@ import java.util.UUID;
 public class ClazzServiceImpl implements ClazzService {
     @Autowired
     private BaseDAO baseDAO;
+    @Autowired
+    private LogService logService;
 
     @Override
     public String createClazz(String name,double longitude,double latitude) {
@@ -25,7 +28,7 @@ public class ClazzServiceImpl implements ClazzService {
         List clazz;
         while (true)
         {
-            code= UUID.randomUUID().toString();
+            code= UUID.randomUUID().toString().substring(0,4);
             clazz = baseDAO.find("from Classes clazz where clazz.code='" + code + "'");
             if (clazz.size() == 0)
                 break;
@@ -37,6 +40,7 @@ public class ClazzServiceImpl implements ClazzService {
         c.setName(name);
         c.setStart(0);
         c.setStudent(" ");
+        c.setNext(0);
         Users uu=(Users)ActionContext.getContext().getSession().get("user");
         c.setTeacher(uu.getName());
         baseDAO.add(c);
@@ -82,20 +86,50 @@ public class ClazzServiceImpl implements ClazzService {
     }
     @Override
     public void startSignIn(String code){
-        //TODO
+        List clazz=baseDAO.find("from Classes clazz where clazz.code='" + code + "'");
+        Classes c=(Classes)clazz.get(0);
+        c.setStart(1);
+        c.setNext(c.getNext()+1);
+        logService.addLog(code,c.getNext());
+        baseDAO.update(c);
     }
     @Override
     public void stopSignIn(String code){
-        //TODO
+        List clazz=baseDAO.find("from Classes clazz where clazz.code='" + code + "'");
+        Classes c=(Classes)clazz.get(0);
+        c.setStart(0);
+        baseDAO.update(c);
     }
     @Override
-    public void getClazz(){
-        //TODO
+    public List getClazz(){
+        Users uu=(Users)ActionContext.getContext().getSession().get("user");
+        List clazz=baseDAO.find("from Classes clazz where clazz.student like '%"+
+                uu.getName()+"%' or clazz.teacher like '%"+uu.getName()+"%'");
+        return clazz;
     }
-    //0成功 -1未开始签到 -2mac地址不对 -3位置不对
+    //0成功 -1未开始签到 -2mac地址不对 -3位置不对 -4没有此班级
     @Override
     public int signIn(String code,String mac,double newLongitude,double newLatitude){
-        //TODO
-        return 0;
+        Users uu=(Users)ActionContext.getContext().getSession().get("user");
+        double epsilon=0.0001;
+        List clazz=baseDAO.find("from Classes clazz where clazz.code='" + code + "'");
+        if (clazz.size()==0)
+            return -4;
+        Classes c=(Classes)clazz.get(0);
+        if (c.getStart()==0)
+            return -1;
+        if (!uu.getMac().equals(mac))
+            return -2;
+        double oldLat,oldLon;
+        oldLat=c.getLatitude();
+        oldLon=c.getLongitude();
+        if (oldLat+epsilon>newLatitude && oldLat-epsilon<newLatitude
+                && oldLon+epsilon>newLongitude && oldLon-epsilon<newLongitude)
+        {
+            logService.updateLog(code,c.getNext(),uu.getName());
+            return 0;
+        }
+        else
+            return -3;
     }
 }
